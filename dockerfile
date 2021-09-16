@@ -4,4 +4,4 @@ COPY . /root
 
 WORKDIR /root
 
-RUN  pip install flask gunicorn flask_wtf numpy
+RUN  pip install flask gunicorn flask_wtf numpy Pillow
