@@ -12,7 +12,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <form method="post" enctype="multipart/form-data" action=""> 
+      <form method="post" enctype="multipart/form-data" action="/"> 
         <div class="mb-3">
           <label for="upload" class="form-label">URL of picture</label>
           <input type="url" name="url" class="form-control" id="upload" >
@@ -29,9 +29,9 @@
     <p>Белые:  {{white}}</p>
     </div>
     <div class="col">
-      <form method="post" enctype="multipart/form-data"> 
+      <form method="post" action="/hex"> 
         <label for="hex" class="form-label">HEX-code color</label>
-        <input type="hex" name="hex" class="form-control" id="hex" >
+        <input type="text" name="hex" class="form-control" >
         <button type="submit" class="btn btn-secondary">Upload</button>
     </form>
     <p class="text-white "> Кол-во пикселей: {{ hex }} 

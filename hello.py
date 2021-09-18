@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect , url_for, flash
+from flask import Flask, request, redirect ,flash, session
 from flask.templating import render_template
 from PIL import Image, ImageColor
 import numpy as np
@@ -12,11 +12,27 @@ ALLOWED_EXTENSIONS = set([ 'png', 'jpg', 'jpeg'])
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = 'super secret key'
 
+global path1
+
 def allowed_file(filename):
     """ Функция проверки расширения файла """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+def countBW(path):             
+            # Берем картинку и считаем белые и чёрные пиксели
+            original = np.array(Image.open(path).convert('RGB')) 
+            
+            black = [0, 0, 0]
+            white = [255, 255, 255]
+            numblacks = numwhites = 0
+            numblacks = np.count_nonzero(np.all(original==black, axis=2))
+            numwhites = np.count_nonzero(np.all(original==white, axis=2))   
+            return render_template ("index.html", black=numblacks, white=numwhites, path=path)
+
+
+        
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -38,47 +54,27 @@ def upload_file():
             # сохраняем файл
             path=(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             file.save(path)
+            session['path']= path
+            return countBW(path)
+          
+    return render_template ("index.html")     
 
-            # Берем картинку и считаем белые и чёрные пиксели
-            original = np.array(Image.open(path).convert('RGB')) 
-            black = [0, 0, 0]
-            white = [255, 255, 255]
-            numblacks = numwhites = 0
-            numblacks = np.count_nonzero(np.all(original==black, axis=2))
-            numwhites = np.count_nonzero(np.all(original==white, axis=2))   
-            return render_template ("index.html", black=numblacks, white=numwhites, path=path)
-
-            #return redirect(url_for('countBW', name=path))
-    return render_template ("index.html")
-
-
-
-@app.route('/pixels', methods=['GET', 'POST'])
-def countBW():
-            if request.method == 'POST':
-                path=request.args.get('name')
-                original = np.array(Image.open(path).convert('RGB')) 
-                black = [0, 0, 0]
-                white = [255, 255, 255]
-                numblacks = numwhites = 0
-                numblacks = np.count_nonzero(np.all(original==black, axis=2))
-                numwhites = np.count_nonzero(np.all(original==white, axis=2))   
-            return render_template ("count.html", black=numblacks, white=numwhites)
-
-if __name__ == '__main__':
-    app.run() 
-
-@app.route('/hex')
+    
+@app.route('/hex', methods=['GET', 'POST'])
 def countHex():
-        
-        original = np.array(Image.open("static/pic/dino.png").convert('RGB')) 
-        
-        hex=ImageColor.getrgb("#000000")
-        
-        numpixels = 0
-        numpixels = np.count_nonzero(np.all(original==hex, axis=2))
-        
-        return render_template ("hex.html", hex=numpixels)
+        if request.method == 'POST':
+            hex = request.form.get('hex')
+            color=ImageColor.getrgb(hex)
+            original = np.array(Image.open(session['path']).convert('RGB')) 
+            numpixels = 0
+            numpixels = np.count_nonzero(np.all(original==color, axis=2))
+            return render_template ("index.html", hex=numpixels, path=session['path'])    
+        return render_template ("index.html")    
+           
+    
+
+
+
 
 if __name__ == '__main__':
     app.run() 
