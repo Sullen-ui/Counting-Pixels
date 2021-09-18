@@ -28,7 +28,9 @@ def countBW(path):
             white = [255, 255, 255]
             numblacks = numwhites = 0
             numblacks = np.count_nonzero(np.all(original==black, axis=2))
-            numwhites = np.count_nonzero(np.all(original==white, axis=2))   
+            numwhites = np.count_nonzero(np.all(original==white, axis=2)) 
+            session['white'] = numwhites  
+            session['black'] = numblacks 
             return render_template ("index.html", black=numblacks, white=numwhites, path=path)
 
 
@@ -68,7 +70,7 @@ def countHex():
             original = np.array(Image.open(session['path']).convert('RGB')) 
             numpixels = 0
             numpixels = np.count_nonzero(np.all(original==color, axis=2))
-            return render_template ("index.html", hex=numpixels, path=session['path'])    
+            return render_template ("index.html", hex=numpixels, path=session['path'], white =session['white'] , black =session['black'])    
         return render_template ("index.html")    
            
     

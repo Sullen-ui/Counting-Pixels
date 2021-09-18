@@ -14,15 +14,15 @@
     <div class="col">
       <form method="post" enctype="multipart/form-data" action="/"> 
         <div class="mb-3">
-          <label for="upload" class="form-label">URL of picture</label>
-          <input type="url" name="url" class="form-control" id="upload" >
+          <h3> Загрузить изображение</h3>
+          <input type="file" name="file" class="btn btn-secondary">
+          <button type="submit" class="btn btn-secondary">Upload</button>
         </div>
-        <input type="file" name="file" class="btn btn-secondary">
-        <button type="submit" class="btn btn-secondary">Upload</button>
+       
       </form>
     </div>
     <div class="col">
-      <h1> Ваше изображение</h1>
+      <h3> Ваше изображение</h3>
     <img src="{{path}}" alt="Картинка"  width="250px" height="250px">
     <br>
     <p class="text-success">Черные пискели: {{black}}</p> 
@@ -30,7 +30,7 @@
     </div>
     <div class="col">
       <form method="post" action="/hex"> 
-        <label for="hex" class="form-label">HEX-code color</label>
+        <h3> Введите HEX-код цвета</h3>
         <input type="text" name="hex" class="form-control" >
         <button type="submit" class="btn btn-secondary">Upload</button>
     </form>
