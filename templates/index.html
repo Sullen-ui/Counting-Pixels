@@ -22,10 +22,21 @@
       </form>
     </div>
     <div class="col">
-      {% include 'count.html' %}
+      <h1> Ваше изображение</h1>
+    <img src="{{path}}" alt="Картинка"  width="250px" height="250px">
+    <br>
+    <p class="text-success">Черные пискели: {{black}}</p> 
+    <p>Белые:  {{white}}</p>
     </div>
     <div class="col">
-      {% include 'hex.html' %}
+      <form method="post" enctype="multipart/form-data"> 
+        <label for="hex" class="form-label">HEX-code color</label>
+        <input type="hex" name="hex" class="form-control" id="hex" >
+        <button type="submit" class="btn btn-secondary">Upload</button>
+    </form>
+    <p class="text-white "> Кол-во пикселей: {{ hex }} 
+      
+    </p>
     </div>
   </div>
 </div>

@@ -38,10 +38,17 @@ def upload_file():
             # сохраняем файл
             path=(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             file.save(path)
-            # если все прошло успешно, то перенаправляем  
-            # на функцию-представление `download_file` 
-            # для скачивания файла
-            return redirect(url_for('countBW', name=path))
+
+            # Берем картинку и считаем белые и чёрные пиксели
+            original = np.array(Image.open(path).convert('RGB')) 
+            black = [0, 0, 0]
+            white = [255, 255, 255]
+            numblacks = numwhites = 0
+            numblacks = np.count_nonzero(np.all(original==black, axis=2))
+            numwhites = np.count_nonzero(np.all(original==white, axis=2))   
+            return render_template ("index.html", black=numblacks, white=numwhites, path=path)
+
+            #return redirect(url_for('countBW', name=path))
     return render_template ("index.html")
 
 
@@ -56,7 +63,7 @@ def countBW():
                 numblacks = numwhites = 0
                 numblacks = np.count_nonzero(np.all(original==black, axis=2))
                 numwhites = np.count_nonzero(np.all(original==white, axis=2))   
-            return render_template ("count.html", black=numblacks, white=numwhites ,name=name)
+            return render_template ("count.html", black=numblacks, white=numwhites)
 
 if __name__ == '__main__':
     app.run() 
