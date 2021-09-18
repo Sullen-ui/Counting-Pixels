@@ -1,7 +1,34 @@
 <!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
 <title>Upload File</title>
-<h1>Загрузить картинку</h1>
-    <form method="post" enctype="multipart/form-data">
-      <input type="file" name="file1">
-      <input type="submit">
-    </form> 
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://bootstraptema.ru/snippets/style/2015/bootswatch/bootstrap-darkly-v3.3.6.css" media="screen">
+<link rel="stylesheet" href="https://bootstraptema.ru/snippets/style/2015/bootswatch/custom.min.css">
+
+</head>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form method="post" enctype="multipart/form-data" action=""> 
+        <div class="mb-3">
+          <label for="upload" class="form-label">URL of picture</label>
+          <input type="url" name="url" class="form-control" id="upload" >
+        </div>
+        <input type="file" name="file" class="btn btn-secondary">
+        <button type="submit" class="btn btn-secondary">Upload</button>
+      </form>
+    </div>
+    <div class="col">
+      {% include 'count.html' %}
+    </div>
+    <div class="col">
+      {% include 'hex.html' %}
+    </div>
+  </div>
+</div>
+
+
+</html>
