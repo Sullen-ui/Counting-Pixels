@@ -4,6 +4,7 @@ from flask.templating import render_template
 from PIL import Image, ImageColor
 import numpy as np
 
+#Путь для картинок
 UPLOAD_FOLDER = './static/pic'
 
 app = Flask(__name__)
@@ -12,11 +13,9 @@ ALLOWED_EXTENSIONS = set([ 'png', 'jpg', 'jpeg'])
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = 'super secret key'
 
-global path1
-
+# Функция проверки расширения файла 
 def allowed_file(filename):
-    """ Функция проверки расширения файла """
-    return '.' in filename and \
+        return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -29,8 +28,10 @@ def countBW(path):
             numblacks = numwhites = 0
             numblacks = np.count_nonzero(np.all(original==black, axis=2))
             numwhites = np.count_nonzero(np.all(original==white, axis=2)) 
+            # Заносим переменные в библиотеку сессии для использования в других функциях
             session['white'] = numwhites  
             session['black'] = numblacks 
+            #Сравниваю каких пикселей больше и так-же заношу в библиотеку
             result = max(numwhites,numblacks)
             if result == numwhites:
                 phrase = 'Белых пикселей больше'
@@ -69,6 +70,7 @@ def upload_file():
 
     
 @app.route('/hex', methods=['GET', 'POST'])
+# Считаем писели по HEX коду
 def countHex():
         if request.method == 'POST':
             hex = request.form.get('hex')
