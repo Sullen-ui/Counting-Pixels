@@ -31,7 +31,13 @@ def countBW(path):
             numwhites = np.count_nonzero(np.all(original==white, axis=2)) 
             session['white'] = numwhites  
             session['black'] = numblacks 
-            return render_template ("index.html", black=numblacks, white=numwhites, path=path)
+            result = max(numwhites,numblacks)
+            if result == numwhites:
+                phrase = 'Белых пикселей больше'
+            else:
+                phrase = 'Черных пикселей больше'
+            session['phrase'] = phrase
+            return render_template ("index.html", black=numblacks, white=numwhites, path=path, phrase=phrase )
 
 
         

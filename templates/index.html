@@ -15,7 +15,7 @@
       <form method="post" enctype="multipart/form-data" action="/"> 
         <div class="mb-3">
           <h3> Загрузить изображение</h3>
-          <input type="file" name="file" class="btn btn-secondary">
+          <input type="file" name="file" class="form-control">
           <button type="submit" class="btn btn-secondary">Upload</button>
         </div>
        
@@ -25,8 +25,9 @@
       <h3> Ваше изображение</h3>
     <img src="{{path}}" alt="Картинка"  width="250px" height="250px">
     <br>
-    <p class="text-success">Черные пискели: {{black}}</p> 
-    <p>Белые:  {{white}}</p>
+    <p class="text-black">Черные пискели: {{black}}</p> 
+    <p class="text-white">Белые пиксели:  {{white}}</p>
+    <p class="text-white">{{phrase}}</p>
     </div>
     <div class="col">
       <form method="post" action="/hex"> 
@@ -35,7 +36,10 @@
         <button type="submit" class="btn btn-secondary">Upload</button>
     </form>
     <p class="text-white "> Кол-во пикселей: {{ hex }} 
-      
+
+    </p>
+    <p class="text-white "> Для проверки чёрного: #000000
+        
     </p>
     </div>
   </div>

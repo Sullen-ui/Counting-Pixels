@@ -6,6 +6,8 @@ div.col {
         background: #222;
         color: #fff;
         text-align: center;
+       
         border: 1px solid rgb(2, 182, 2);
         box-shadow:0 0 20px rgb(55, 163, 5);
 }
+form { }
