@@ -76,7 +76,7 @@ def countHex():
             original = np.array(Image.open(session['path']).convert('RGB')) 
             numpixels = 0
             numpixels = np.count_nonzero(np.all(original==color, axis=2))
-            return render_template ("index.html", hex=numpixels, path=session['path'], white =session['white'] , black =session['black'])    
+            return render_template ("index.html", hex=numpixels, path=session['path'], white =session['white'] , black =session['black'], phrase=session['phrase'])    
         return render_template ("index.html")    
            
     
